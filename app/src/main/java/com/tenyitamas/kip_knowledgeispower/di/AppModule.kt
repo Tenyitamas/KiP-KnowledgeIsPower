@@ -94,7 +94,6 @@ object AppModule {
     ): NewsUseCases {
         return NewsUseCases(
             deleteArticle = DeleteArticle(repository),
-            getNews = GetNews(repository),
             getSavedArticle = GetSavedArticle(repository),
             getTopNews = GetTopNews(repository),
             saveArticle = SaveArticle(repository),

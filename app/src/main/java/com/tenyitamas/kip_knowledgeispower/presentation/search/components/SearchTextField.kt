@@ -22,10 +22,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,7 +41,7 @@ fun SearchTextField(
     onValueChange: (String) -> Unit,
     onSearch: () -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = stringResource(id = R.string.search),
+    hint: String = stringResource(id = R.string.search_hint),
     shouldShowHint: Boolean = false,
     onFocusChanged: (FocusState) -> Unit
 ) {
@@ -69,13 +71,22 @@ fun SearchTextField(
                     elevation = 2.dp,
                     shape = RoundedCornerShape(5.dp)
                 )
-                .background(MaterialTheme.colors.primary)
+                .background(MaterialTheme.colors.surface.copy(alpha = 0.33f))
                 .fillMaxWidth()
                 .padding(spacing.spaceMedium)
                 .padding(end = spacing.spaceMedium)
                 .onFocusChanged {
                     onFocusChanged(it)
-                }
+                },
+            textStyle = TextStyle(
+                color = MaterialTheme.colors.onSurface
+            ),
+            cursorBrush = Brush.horizontalGradient(
+                colors = listOf(
+                    MaterialTheme.colors.onSurface,
+                    MaterialTheme.colors.onSurface
+                )
+            )
 
         )
         if(shouldShowHint) {
@@ -83,7 +94,7 @@ fun SearchTextField(
                 text = hint,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Light,
-                color = Color.LightGray,
+                color = MaterialTheme.colors.onSurface,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(start = spacing.spaceMedium)
@@ -97,7 +108,8 @@ fun SearchTextField(
         ) {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = stringResource(R.string.search_hint)
+                contentDescription = stringResource(R.string.search_hint),
+                tint = MaterialTheme.colors.onSurface
             )
         }
     }

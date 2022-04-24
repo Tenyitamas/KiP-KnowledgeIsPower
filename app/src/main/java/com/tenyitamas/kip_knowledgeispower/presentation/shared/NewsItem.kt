@@ -47,7 +47,7 @@ fun NewsItem(
                 elevation = 1.dp,
                 shape = RoundedCornerShape(15.dp)
             )
-            .background(MaterialTheme.colors.onBackground)
+            .background(MaterialTheme.colors.surface)
             .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -78,7 +78,7 @@ fun NewsItem(
             Text(
                 text = it,
                 style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onSurface,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center
@@ -92,7 +92,7 @@ fun NewsItem(
             Text(
                 text = it,
                 style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onSurface,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )

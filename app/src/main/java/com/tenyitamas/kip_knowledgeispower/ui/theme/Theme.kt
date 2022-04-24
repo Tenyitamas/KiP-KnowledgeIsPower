@@ -8,25 +8,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = BrightGreen,
-    primaryVariant = DarkGreen,
+    primary = TextWhite,
+    primaryVariant = LightGray,
     secondary = Orange,
-    background = MediumGray,
+    background = DarkGray,
     onBackground = TextWhite,
-    surface = LightGray,
+    surface = MediumGray,
     onSurface = TextWhite,
     onPrimary = Color.White,
     onSecondary = Color.White,
 )
 
 private val LightColorPalette = lightColors(
-    primary = BrightGreen,
-    primaryVariant = DarkGreen,
-    secondary = Orange,
+    primary = Color.Black,
+    primaryVariant = DarkGray,
+    secondary = MediumBlue,
     background = Color.White,
     onBackground = DarkGray,
-    surface = Color.White,
-    onSurface = DarkGray,
+    surface = LightGray,
+    onSurface = Color.White,
     onPrimary = Color.White,
     onSecondary = Color.White,
 )
@@ -39,7 +39,7 @@ fun KiPKnowledgeIsPowerTheme(
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
-        LightColorPalette
+        DarkColorPalette
     }
 
     MaterialTheme(

@@ -51,24 +51,6 @@ class NewsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getNews(countryCode: String, page: Int): Resource<List<Article>> {
-        return try {
-            val response = api.getNews(
-                countryCode = countryCode,
-                pageNumber = page
-            )
-
-            val result = response.body()
-            if(response.isSuccessful && result != null) {
-                Resource.Success(result.articles)
-            } else {
-                Resource.Error("Error while searching for news")
-            }
-        } catch (e: Exception) {
-            Resource.Error("Error occurred: ${e.localizedMessage}")
-        }
-    }
-
     override suspend fun saveArticle(article: Article) {
         dao.insert(article = article.toArticleEntity())
     }

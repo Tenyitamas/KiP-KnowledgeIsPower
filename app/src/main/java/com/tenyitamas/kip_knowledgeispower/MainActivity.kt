@@ -32,7 +32,9 @@ import com.squareup.moshi.Moshi
 import com.tenyitamas.kip_knowledgeispower.domain.model.Article
 import com.tenyitamas.kip_knowledgeispower.domain.model.Source
 import com.tenyitamas.kip_knowledgeispower.navigation.Route
+import com.tenyitamas.kip_knowledgeispower.presentation.detailed.DetailedScreen
 import com.tenyitamas.kip_knowledgeispower.presentation.search.SearchScreen
+import com.tenyitamas.kip_knowledgeispower.presentation.settings.SettingsScreen
 import com.tenyitamas.kip_knowledgeispower.presentation.shared.BottomNavItem
 import com.tenyitamas.kip_knowledgeispower.presentation.shared.BottomNavigationBar
 import com.tenyitamas.kip_knowledgeispower.presentation.shared.NewsItem
@@ -93,9 +95,8 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             val article = it.arguments?.getParcelable<Article>("article")
-                            Text(
-                                text = article?.title ?: "No title for this article",
-                                modifier = Modifier.fillMaxSize()
+                            DetailedScreen(
+                                article = article
                             )
                         }
 
@@ -107,10 +108,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Route.SETTINGS) {
-                            Text(
-                                text = "HELLO SETTINGS",
-                                modifier = Modifier.fillMaxSize()
-                            )
+                            SettingsScreen()
                         }
                     }
                 }

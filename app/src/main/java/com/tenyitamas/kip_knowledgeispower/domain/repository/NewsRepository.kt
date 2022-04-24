@@ -18,11 +18,6 @@ interface NewsRepository{
         page: Int
     ): Resource<List<Article>>
 
-    suspend fun getNews(
-        countryCode: String,
-        page: Int
-    ): Resource<List<Article>>
-
     suspend fun saveArticle(article: Article)
 
     suspend fun deleteArticle(article: Article)

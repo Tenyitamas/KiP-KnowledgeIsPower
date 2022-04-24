@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigation.findNavController
 import com.tenyitamas.kip_knowledgeispower.domain.preferences.Preferences
 import com.tenyitamas.kip_knowledgeispower.domain.use_case.NewsUseCases
 import com.tenyitamas.kip_knowledgeispower.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +24,10 @@ class SearchViewModel @Inject constructor(
 
 
     init {
+
+
         state = state.copy(
-            settingsInfo = preferences.loadSettingsInfo()
+            countryCode = preferences.loadCountryCode()
         )
         refreshNews()
     }
@@ -76,7 +78,9 @@ class SearchViewModel @Inject constructor(
 
     private fun refreshNews() {
         viewModelScope.launch {
-            val res = newsUseCases.getTopNews("us", 1)
+            val res = newsUseCases.getTopNews(
+                countryCode = state.countryCode
+            )
 
             when(res) {
                 is Resource.Error -> {

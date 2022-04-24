@@ -2,9 +2,11 @@
 
 package com.tenyitamas.kip_knowledgeispower.presentation.search
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +38,7 @@ fun SearchScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(bottom = spacing.spaceMedium)
+            .background(MaterialTheme.colors.background)
     ) {
         LazyColumn {
             item {
@@ -64,7 +67,6 @@ fun SearchScreen(
                         .fillMaxWidth()
                         .padding(spacing.spaceSmall)
                 )
-                //Spacer(modifier = Modifier.height(spacing.spaceMedium))
             }
 
         }
