@@ -63,7 +63,7 @@ fun SettingsScreen(
                 },
                 modifier = Modifier
                     .alignByBaseline()
-                    .background(MaterialTheme.colors.onBackground)
+                    .background(MaterialTheme.colors.surface)
             ) {
                 SettingsState.countryCodes.forEachIndexed { index, s ->
                     DropdownMenuItem(

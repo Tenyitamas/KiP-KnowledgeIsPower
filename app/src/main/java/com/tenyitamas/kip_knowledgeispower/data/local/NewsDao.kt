@@ -13,6 +13,6 @@ interface NewsDao {
     @Query("SELECT * FROM articles")
     fun getSavedArticles(): Flow<List<ArticleEntity>>
 
-    @Delete
-    suspend fun delete(article: ArticleEntity)
+    @Query("DELETE FROM articles WHERE id=:id")
+    suspend fun delete(id: Int)
 }

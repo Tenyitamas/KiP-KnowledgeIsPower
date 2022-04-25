@@ -30,6 +30,7 @@ import coil.request.ImageRequest
 
 import com.tenyitamas.kip_knowledgeispower.R
 import com.tenyitamas.kip_knowledgeispower.domain.model.Article
+import com.tenyitamas.kip_knowledgeispower.ui.theme.LocalSpacing
 
 @ExperimentalCoilApi
 @Composable
@@ -53,6 +54,8 @@ fun NewsItem(
         verticalArrangement = Arrangement.Center
     ) {
 
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -81,7 +84,8 @@ fun NewsItem(
                 color = MaterialTheme.colors.onSurface,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = LocalSpacing.current.spaceSmall)
             )
         }
 
@@ -92,11 +96,14 @@ fun NewsItem(
             Text(
                 text = it,
                 style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.primary.copy(alpha = 0.8f),
                 maxLines = 3,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(horizontal = LocalSpacing.current.spaceSmall)
             )
         }
+
+        Spacer(modifier = Modifier.height(LocalSpacing.current.spaceSmall))
     }
 
 }

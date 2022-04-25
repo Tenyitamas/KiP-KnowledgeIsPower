@@ -6,7 +6,7 @@ import com.tenyitamas.kip_knowledgeispower.domain.repository.NewsRepository
 class DeleteArticle(
     private val repository: NewsRepository
 ) {
-    suspend operator fun invoke(article: Article) {
-        repository.deleteArticle(article)
+    suspend operator fun invoke(id: Int) {
+        repository.deleteArticle(id)
     }
 }

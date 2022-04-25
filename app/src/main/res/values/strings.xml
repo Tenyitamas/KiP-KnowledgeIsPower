@@ -8,4 +8,8 @@
     <string name="search_type">Search type</string>
     <string name="all_news">All news</string>
     <string name="top_headlines">Top headlines</string>
+    <string name="error_title_cannot_be_loaded">Title cannot be loaded...</string>
+    <string name="no_saved_articles">"No saved articles available.  "</string>
+    <string name="article_deleted">Article deleted</string>
+    <string name="undo">Undo</string>
 </resources>

@@ -55,8 +55,8 @@ class NewsRepositoryImpl @Inject constructor(
         dao.insert(article = article.toArticleEntity())
     }
 
-    override suspend fun deleteArticle(article: Article) {
-        dao.delete(article = article.toArticleEntity())
+    override suspend fun deleteArticle(id: Int) {
+        dao.delete(id = id)
     }
 
     override fun getSavedArticles(): Flow<List<Article>> {

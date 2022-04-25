@@ -21,7 +21,8 @@ import com.tenyitamas.kip_knowledgeispower.ui.theme.LocalSpacing
 
 @Composable
 fun SearchScreen(
-    onNavigateToOverview: (Article) -> Unit,
+    onArticleClick: (Article) -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
 
@@ -35,9 +36,8 @@ fun SearchScreen(
         onRefresh = {
             viewModel.onEvent(SearchEvent.OnRefresh)
         },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(bottom = spacing.spaceMedium)
             .background(MaterialTheme.colors.background)
     ) {
         LazyColumn {
@@ -62,7 +62,7 @@ fun SearchScreen(
             items(viewModel.state.articles) { article ->
                 NewsItem(
                     article = article,
-                    onClick = { onNavigateToOverview(article) },
+                    onClick = { onArticleClick(article) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(spacing.spaceSmall)

@@ -1,9 +1,13 @@
 package com.tenyitamas.kip_knowledgeispower.presentation.detailed
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,33 +24,59 @@ class DetailedViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    val TAG = "DetailsViewModel"
+
     var state by mutableStateOf(DetailedState())
         private set
+    var articleId = 0;
 
     init {
+        Log.d(TAG, "init: ...")
+        state = state.copy(
+            article = savedStateHandle.get<Article>("article")
+        )
+        articleId = state.article?.id ?: 0
+        refreshSavedNews()
+
+    }
+
+    private fun refreshSavedNews() {
+        Log.d(TAG, "refreshSavedNews: stateArticleId: ${state.article?.id}")
         viewModelScope.launch {
             newsUseCases.getSavedArticle()
                 .collectLatest {
                     state = state.copy(
-                        isSaved = it.contains(state.article),
-                        article = savedStateHandle.get<Article>("article")
+                        isSaved = doesContainArticle(it, state.article),
+                        isLoaded = true
                     )
                 }
+
         }
+    }
+
+    private fun doesContainArticle(it: List<Article>, article: Article?): Boolean {
+        it.forEach {
+
+            if(it.title ?: "abc" == article?.title ?: "cde") {
+                Log.d(TAG, "doesContainArticle: ${it.id}")
+                articleId = it.id ?: 0
+                return true
+            }
+        }
+
+        return false
     }
 
     fun onEvent(event: DetailedEvent) {
         when(event) {
             DetailedEvent.OnSaveButtonClick -> {
                 if(state.isSaved) {
-                    deleteArticleFromSavedArticles(state.article)
+                    deleteArticleFromSavedArticles(articleId)
                 } else {
                     insertArticleToSavedArticles(state.article)
                 }
             }
-            DetailedEvent.OnShareButtonClick -> {
 
-            }
         }
     }
 
@@ -54,21 +84,19 @@ class DetailedViewModel @Inject constructor(
         article?.let {
             viewModelScope.launch {
                 newsUseCases.saveArticle(article)
-                state = state.copy(
-                    isSaved = true
-                )
+
+            }.invokeOnCompletion {
+                refreshSavedNews()
             }
         }
     }
 
-    private fun deleteArticleFromSavedArticles(article: Article?) {
-        article?.let {
-            viewModelScope.launch {
-                newsUseCases.deleteArticle(article = article)
-                state = state.copy(
-                    isSaved = false
-                )
-            }
+    private fun deleteArticleFromSavedArticles(id: Int) {
+        viewModelScope.launch {
+            Log.d("DetailsViewModel", "deleteArticleFromSavedArticles: $id")
+            newsUseCases.deleteArticle(id = id)
+        }.invokeOnCompletion {
+            refreshSavedNews()
         }
     }
 }

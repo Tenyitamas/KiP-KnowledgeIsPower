@@ -26,7 +26,7 @@ fun BottomNavigationBar(
 
     BottomNavigation(
         modifier = modifier,
-        backgroundColor = Color.DarkGray,
+        backgroundColor = MaterialTheme.colors.surface,
         elevation = 5.dp
     ) {
         items.forEach { item ->
@@ -36,8 +36,8 @@ fun BottomNavigationBar(
                 onClick = {
                     onItemClick(item)
                 },
-                selectedContentColor = Color.Green,
-                unselectedContentColor = Color.Gray,
+                selectedContentColor = MaterialTheme.colors.secondary,
+                unselectedContentColor = MaterialTheme.colors.onSurface,
                 icon = {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         if (item.badgeCount > 0) {
