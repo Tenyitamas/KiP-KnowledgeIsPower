@@ -4,44 +4,27 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavType
-import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.google.gson.Gson
-import com.squareup.moshi.Moshi
 import com.tenyitamas.kip_knowledgeispower.domain.model.Article
-import com.tenyitamas.kip_knowledgeispower.domain.model.Source
 import com.tenyitamas.kip_knowledgeispower.navigation.Route
 import com.tenyitamas.kip_knowledgeispower.presentation.detailed.DetailedScreen
 import com.tenyitamas.kip_knowledgeispower.presentation.saved.SavedScreen
 import com.tenyitamas.kip_knowledgeispower.presentation.search.SearchScreen
 import com.tenyitamas.kip_knowledgeispower.presentation.settings.SettingsScreen
-import com.tenyitamas.kip_knowledgeispower.presentation.shared.BottomNavItem
 import com.tenyitamas.kip_knowledgeispower.presentation.shared.BottomNavigationBar
-import com.tenyitamas.kip_knowledgeispower.presentation.shared.NewsItem
 import com.tenyitamas.kip_knowledgeispower.ui.theme.KiPKnowledgeIsPowerTheme
-import com.tenyitamas.kip_knowledgeispower.util.AssetParamType
+import com.tenyitamas.kip_knowledgeispower.navigation.ArticleParamType
 import com.tenyitamas.kip_knowledgeispower.util.bottomNavItems
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -103,19 +86,24 @@ class MainActivity : ComponentActivity() {
                                 .plus("/{article}"),
                             arguments = listOf(
                                 navArgument("article") {
-                                    type = AssetParamType()
+                                    type = ArticleParamType()
                                 }
                             )
                         ) {
                             val article = it.arguments?.getParcelable<Article>("article")
+                            val imageUri = Uri.parse(
+                                article?.urlToImage ?: "android.resource://"
+                                    .plus(packageName)
+                                    .plus("/drawable/" + "ic_launcher")
+                            )
                             val share = Intent.createChooser(
                                 Intent().apply {
                                     action = Intent.ACTION_SEND
                                     putExtra(Intent.EXTRA_TEXT, article?.url ?: "")
-                                    type = "text/plain"
+                                    putExtra(Intent.EXTRA_STREAM, imageUri)
                                     putExtra(Intent.EXTRA_TITLE, article?.title ?: "")
-                                    //data = Uri.parse(article?.urlToImage ?: "")
-                                    //flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                    type = "image/*"
+                                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 },
                                 article?.title ?: ""
                             )

@@ -44,8 +44,13 @@ fun ArticleHeader(
 
             Spacer(modifier = Modifier.height(spacing.spaceSmall))
 
+            val descriptionDisplayText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml("<div>$description</div>", Html.FROM_HTML_MODE_COMPACT).toString()
+            } else {
+                description
+            }
             Text(
-                text = description,
+                text = descriptionDisplayText,
                 style = MaterialTheme.typography.subtitle1,
                 color = MaterialTheme.colors.primary.copy(alpha = 0.8f)
             )
@@ -57,6 +62,7 @@ fun ArticleHeader(
             } else {
                 source
             }
+
 
             val timeDisplayString = timeString.map {
                 if (it.isLetter()) " "

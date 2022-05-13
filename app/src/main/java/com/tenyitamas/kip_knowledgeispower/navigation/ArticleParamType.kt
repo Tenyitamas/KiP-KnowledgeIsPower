@@ -1,11 +1,11 @@
-package com.tenyitamas.kip_knowledgeispower.util
+package com.tenyitamas.kip_knowledgeispower.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavType
 import com.google.gson.Gson
 import com.tenyitamas.kip_knowledgeispower.domain.model.Article
 
-class AssetParamType : NavType<Article>(isNullableAllowed = false) {
+class ArticleParamType : NavType<Article>(isNullableAllowed = false) {
     override fun get(bundle: Bundle, key: String): Article? {
         return bundle.getParcelable(key)
     }

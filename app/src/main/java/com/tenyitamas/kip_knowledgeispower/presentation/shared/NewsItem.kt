@@ -2,6 +2,8 @@
 
 package com.tenyitamas.kip_knowledgeispower.presentation.shared
 
+import android.os.Build
+import android.text.Html
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -61,10 +65,11 @@ fun NewsItem(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(article?.urlToImage)
                 .crossfade(1000)
-                .error(R.drawable.ic_launcher_background)
-                .fallback(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher)
+                .fallback(R.drawable.ic_launcher)
                 .build(),
             contentDescription = article?.title,
+            placeholder = painterResource(id = R.drawable.ic_baseline_downloading_24),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(150.dp)
@@ -92,9 +97,15 @@ fun NewsItem(
         Spacer(modifier = Modifier.height(4.dp))
 
 
+
         article?.description?.let {
+            val descriptionDisplayText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml("<div>$it</div>", Html.FROM_HTML_MODE_COMPACT).toString()
+            } else {
+                it
+            }
             Text(
-                text = it,
+                text = descriptionDisplayText,
                 style = MaterialTheme.typography.subtitle1,
                 color = MaterialTheme.colors.primary.copy(alpha = 0.8f),
                 maxLines = 3,

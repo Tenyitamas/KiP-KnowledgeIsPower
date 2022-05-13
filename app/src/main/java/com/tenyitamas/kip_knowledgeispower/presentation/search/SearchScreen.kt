@@ -2,18 +2,24 @@
 
 package com.tenyitamas.kip_knowledgeispower.presentation.search
 
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.tenyitamas.kip_knowledgeispower.R
 import com.tenyitamas.kip_knowledgeispower.domain.model.Article
 import com.tenyitamas.kip_knowledgeispower.presentation.search.components.SearchTextField
 import com.tenyitamas.kip_knowledgeispower.presentation.shared.NewsItem
@@ -57,6 +63,18 @@ fun SearchScreen(
                     },
                     shouldShowHint = state.isHintVisible
                 )
+            }
+
+            if(state.articles.isEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(id = R.string.no_articles),
+                        style = MaterialTheme.typography.h4,
+                        color = MaterialTheme.colors.primary,
+                        modifier = Modifier.fillMaxSize(),
+                        textAlign = TextAlign.Center,
+                        )
+                }
             }
 
             items(viewModel.state.articles) { article ->

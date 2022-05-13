@@ -54,8 +54,6 @@ fun SavedScreen(
                     textAlign = TextAlign.Center,
 
                     )
-
-
             }
         }
         items(state.articles) { article ->

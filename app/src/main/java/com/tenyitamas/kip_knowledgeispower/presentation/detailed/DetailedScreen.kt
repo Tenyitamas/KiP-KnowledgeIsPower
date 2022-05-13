@@ -1,5 +1,6 @@
 package com.tenyitamas.kip_knowledgeispower.presentation.detailed
 
+import android.os.Build
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.background

@@ -24,13 +24,12 @@ class SearchViewModel @Inject constructor(
 
 
     init {
-
-
         state = state.copy(
             countryCode = preferences.loadCountryCode()
         )
         refreshNews()
     }
+
     fun onEvent(event: SearchEvent) {
         when (event) {
             is SearchEvent.OnQueryChange -> {
@@ -60,7 +59,7 @@ class SearchViewModel @Inject constructor(
     private fun searchForNews() {
         viewModelScope.launch {
             val res = newsUseCases.searchNews(state.query)
-            when(res) {
+            when (res) {
                 is Resource.Error -> {
                     // Show toast message
                 }
@@ -82,7 +81,7 @@ class SearchViewModel @Inject constructor(
                 countryCode = state.countryCode
             )
 
-            when(res) {
+            when (res) {
                 is Resource.Error -> {
                     // Show toast msg
                     return@launch
